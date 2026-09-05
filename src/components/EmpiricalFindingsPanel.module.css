@@ -1,0 +1,238 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  padding: 24px;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-hairline);
+  padding-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.titleArea {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: var(--bg-base);
+  border: 1px solid var(--border-hairline);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.gridComparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* 1. Context Route Finding (Teal Accent #5EEAD4) */
+.findingCardContext {
+  background-color: var(--bg-base);
+  border: 1px solid var(--border-hairline);
+  border-top: 3px solid var(--accent-a);
+  border-radius: 4px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardTitleContext {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent-a);
+  font-family: var(--font-heading);
+}
+
+.cardTitleOpt {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent-b);
+  font-family: var(--font-heading);
+}
+
+.cardBadgeContext {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent-a);
+  border: 1px solid rgba(94, 234, 212, 0.4);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+.cardBadgeOpt {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent-b);
+  border: 1px solid rgba(242, 150, 125, 0.4);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+/* Primary "Aha" Chart: Demo scaling bars */
+.chartWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 3px;
+  padding: 14px;
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: 75px 1fr 50px;
+  align-items: center;
+  gap: 12px;
+}
+
+.barLabel {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+}
+
+.barTrack {
+  height: 10px;
+  background-color: var(--bg-base);
+  border: 1px solid var(--border-hairline);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.barFillContext {
+  height: 100%;
+  background-color: var(--accent-a);
+  border-radius: 1px;
+  transition: width 200ms ease;
+}
+
+.barValue {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-primary);
+  text-align: right;
+  font-weight: 500;
+}
+
+.cardDescription {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-family: var(--font-body);
+}
+
+/* 2. Optimization Route Finding (Coral Accent #F2967D) */
+.findingCardOpt {
+  background-color: var(--bg-base);
+  border: 1px solid var(--border-hairline);
+  border-top: 3px solid var(--accent-b);
+  border-radius: 4px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.heroStatBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 3px;
+  padding: 20px 16px;
+  text-align: center;
+  gap: 6px;
+}
+
+.heroStatNumber {
+  font-family: var(--font-mono);
+  font-size: 38px;
+  font-weight: 600;
+  color: var(--accent-b);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.heroStatLabel {
+  font-family: var(--font-heading);
+  font-size: 12px;
+  color: var(--text-primary);
+  text-transform: none;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.stepPill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-base);
+  border: 1px solid var(--border-hairline);
+  border-radius: 2px;
+  padding: 6px 2px;
+  gap: 2px;
+}
+
+.stepPillLabel {
+  font-size: 10px;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+}
+
+.stepPillVal {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent-b);
+  font-weight: 500;
+}
+
+.stepPillCellAcc {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+  .gridComparison {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

@@ -8,6 +8,7 @@ import { StateVectorView, GraphNode, GraphEdge } from "@/components/StateVectorV
 import { LossCurveView, LossDataPoint } from "@/components/LossCurveView";
 import { ControlBar } from "@/components/ControlBar";
 import { PrecomputedBadge } from "@/components/PrecomputedBadge";
+import { EmpiricalFindingsPanel } from "@/components/EmpiricalFindingsPanel";
 import styles from "./page.module.css";
 
 interface DemoPair {
@@ -401,6 +402,9 @@ export default function Home() {
           </footer>
         </section>
       </div>
+
+      {/* Empirical Findings Panel (Direct real findings for judges) */}
+      <EmpiricalFindingsPanel />
     </main>
   );
 }
