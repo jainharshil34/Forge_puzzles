@@ -1,0 +1,180 @@
+.container {
+  display: inline-flex;
+  flex-direction: column;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  padding: 8px;
+  user-select: none;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.diffBadge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-hairline);
+  padding: 1px 4px;
+  border-radius: 2px;
+  transition: opacity 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+
+.diffBadgeActive {
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+  background: var(--bg-base);
+}
+
+.dimension {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.gridStack {
+  position: relative;
+  display: inline-block;
+  cursor: crosshair;
+}
+
+.baseGrid {
+  display: grid;
+  gap: 1px;
+  background-color: var(--border-hairline);
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.overlayGrid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  gap: 1px;
+  background-color: var(--border-hairline);
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: auto;
+}
+
+.overlayGridVisible {
+  opacity: 1;
+}
+
+.cell {
+  position: relative;
+  background-color: var(--bg-surface);
+  transition: background-color 150ms ease;
+}
+
+.cellVal0 {
+  background-color: var(--bg-surface);
+}
+
+.cellVal1 {
+  background-color: var(--accent-a);
+}
+
+.cellVal2 {
+  background-color: var(--accent-b);
+}
+
+/* Distinct coral outline strictly around failed/adversarial cells */
+.cellErrorOutline {
+  outline: 2px solid var(--accent-b) !important;
+  outline-offset: -1px;
+  z-index: 3;
+}
+
+.cell:hover {
+  outline: 1px solid var(--text-primary);
+  outline-offset: -1px;
+  z-index: 4;
+}
+
+/* Neuronpedia-style flat instant tooltip */
+.tooltip {
+  position: absolute;
+  z-index: 100;
+  pointer-events: none;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 2px;
+  padding: 3px 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.2;
+  color: var(--text-primary);
+  white-space: nowrap;
+  box-shadow: none;
+  opacity: 1;
+  transform: none;
+}
+
+.tooltipLabel {
+  color: var(--text-secondary);
+  margin-right: 4px;
+}
+
+.tooltipVal {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.tooltipVal1 {
+  color: var(--accent-a);
+}
+
+.tooltipVal2 {
+  color: var(--accent-b);
+}
+
+.tooltipError {
+  color: var(--accent-b);
+  font-size: 10px;
+  margin-left: 4px;
+}
+
+.tooltipMode {
+  color: var(--text-secondary);
+  font-size: 10px;
+  margin-left: 6px;
+  padding-left: 6px;
+  border-left: 1px solid var(--border-hairline);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlayGrid,
+  .cell,
+  .diffBadge {
+    transition: none !important;
+  }
+}
+

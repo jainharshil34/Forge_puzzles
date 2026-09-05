@@ -1,0 +1,329 @@
+.container {
+  min-height: 100vh;
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1440px;
+  margin: 0 auto;
+  transition: box-shadow 200ms ease, border-color 200ms ease;
+}
+
+/* 200ms subtle novelty shift vignette/border effect */
+.noveltyVignette {
+  box-shadow: inset 0 0 0 1px var(--text-secondary), inset 0 0 40px rgba(242, 150, 125, 0.08);
+}
+
+.instrumentHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-hairline);
+  padding-bottom: 16px;
+}
+
+.brandArea {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.headerTelemetry {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.telemetryItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.telemetryVal {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+/* Horizontal pill-tab row for puzzle selection (Neutral gray, neutral underline) */
+.puzzlePicker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-hairline);
+  padding-bottom: 8px;
+}
+
+.pickerLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-right: 8px;
+  font-family: var(--font-heading);
+}
+
+.tabList {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.puzzleTab {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: 13px;
+  padding: 6px 14px;
+  cursor: pointer;
+  position: relative;
+  border-radius: 4px 4px 0 0;
+  transition: color 150ms ease;
+}
+
+.puzzleTab:hover {
+  color: var(--text-primary);
+}
+
+.puzzleTab:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+  z-index: 10;
+}
+
+.puzzleTabActive {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Neutral 2px underline strictly on active tab (No teal, no coral) */
+.puzzleTabActive::after {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-primary);
+}
+
+.tabDimension {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-left: 6px;
+}
+
+/* Two-Instrument Comparison Layout */
+.comparisonGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Instrument Card Panel Base */
+.instrumentPanel {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Context Route Theming (Teal #5EEAD4) */
+.contextInstrument {
+  border-left: 3px solid var(--accent-a);
+}
+
+/* Optimization Route Theming (Coral #F2967D) */
+.optimizationInstrument {
+  border-left: 3px solid var(--accent-b);
+}
+
+/* Panel Header */
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-hairline);
+  padding-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.panelTitleArea {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.panelTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.badgeContext {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent-a);
+  background: rgba(94, 234, 212, 0.08);
+  border: 1px solid var(--accent-a);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.badgeOpt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent-b);
+  background: rgba(242, 150, 125, 0.08);
+  border: 1px solid var(--accent-b);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.headerRightArea {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.adversarialTag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent-b);
+  background: rgba(242, 150, 125, 0.12);
+  border: 1px solid var(--accent-b);
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+/* Body Content: Visualization & Grid Sequence */
+.panelBody {
+  display: grid;
+  grid-template-columns: minmax(320px, 460px) 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* Panel Body: 3 Grids in sequence (Input -> Predicted -> Ground Truth) */
+.flowSequence {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 4px 0;
+}
+
+.arrowGlyph {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+}
+
+/* Panel Telemetry Footer (Monospace IBM Plex Mono) */
+.panelFooter {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border-top: 1px solid var(--border-hairline);
+  padding-top: 14px;
+  flex-wrap: wrap;
+}
+
+.metricGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.metricLabel {
+  color: var(--text-secondary);
+}
+
+.metricValContext {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent-a);
+}
+
+.metricValOpt {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent-b);
+}
+
+.metricValNeutral {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+  .panelBody {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .instrumentHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .puzzlePicker {
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 12px;
+  }
+
+  .flowSequence {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .arrowGlyph {
+    transform: rotate(90deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,111 @@
+.gridContainer {
+  display: inline-flex;
+  flex-direction: column;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  padding: 8px;
+  user-select: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.title {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.dimension {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.grid {
+  display: grid;
+  gap: 1px;
+  background-color: var(--border-hairline);
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cell {
+  position: relative;
+  background-color: var(--bg-surface);
+  transition: background-color 150ms ease;
+  cursor: crosshair;
+}
+
+.cellVal0 {
+  background-color: var(--bg-surface);
+}
+
+.cellVal1 {
+  background-color: var(--accent-a);
+}
+
+.cellVal2 {
+  background-color: var(--accent-b);
+}
+
+/* Hover outline - precise hairline highlight */
+.cell:hover {
+  outline: 1px solid var(--text-primary);
+  outline-offset: -1px;
+  z-index: 2;
+}
+
+/* Neuronpedia-style flat instant tooltip */
+.tooltip {
+  position: absolute;
+  z-index: 100;
+  pointer-events: none;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 2px;
+  padding: 3px 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.2;
+  color: var(--text-primary);
+  white-space: nowrap;
+  box-shadow: none;
+  /* Instant display, no fade */
+  opacity: 1;
+  transform: none;
+}
+
+.tooltipLabel {
+  color: var(--text-secondary);
+  margin-right: 4px;
+}
+
+.tooltipVal {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.tooltipVal1 {
+  color: var(--accent-a);
+}
+
+.tooltipVal2 {
+  color: var(--accent-b);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell {
+    transition: none !important;
+  }
+}
+

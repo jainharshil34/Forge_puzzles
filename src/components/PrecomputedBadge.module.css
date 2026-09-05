@@ -1,0 +1,66 @@
+.badgeContainer {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg-base);
+  border: 1px solid var(--border-hairline);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  padding: 2px 7px;
+  border-radius: 2px;
+  cursor: help;
+  transition: border-color 150ms ease, color 150ms ease;
+  user-select: none;
+}
+
+.badge:hover,
+.badge:focus-visible {
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--text-secondary);
+}
+
+.badgeLive {
+  color: var(--text-primary);
+  border-color: rgba(94, 234, 212, 0.4);
+}
+
+.dotLive {
+  background-color: var(--accent-a);
+  box-shadow: 0 0 4px var(--accent-a);
+}
+
+/* Plain instant monospace tooltip */
+.tooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 120;
+  pointer-events: none;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 2px;
+  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--text-primary);
+  width: 250px;
+  box-shadow: none;
+  white-space: normal;
+  text-align: left;
+}
