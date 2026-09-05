@@ -195,24 +195,26 @@ export default function Home() {
       {/* Horizontal Pill-Tab Row (Neutral Tabs, 2px Neutral Underline) */}
       <nav className={styles.puzzlePicker} aria-label="Puzzle selection tabs">
         <span className={styles.pickerLabel}>Select task:</span>
-        <div className={styles.tabList} role="tablist">
-          {puzzles.map((p) => {
-            const isActive = p.id === currentPuzzle.id;
-            return (
-              <button
-                key={p.id}
-                role="tab"
-                aria-selected={isActive}
-                className={`${styles.puzzleTab} ${
-                  isActive ? styles.puzzleTabActive : ""
-                }`}
-                onClick={() => handleSelectPuzzle(p.id)}
-              >
-                <span>{p.name}</span>
-                <span className={styles.tabDimension}>{p.dimension}</span>
-              </button>
-            );
-          })}
+        <div className={styles.tabScrollContainer}>
+          <div className={styles.tabList} role="tablist">
+            {puzzles.map((p) => {
+              const isActive = p.id === currentPuzzle.id;
+              return (
+                <button
+                  key={p.id}
+                  role="tab"
+                  aria-selected={isActive}
+                  className={`${styles.puzzleTab} ${
+                    isActive ? styles.puzzleTabActive : ""
+                  }`}
+                  onClick={() => handleSelectPuzzle(p.id)}
+                >
+                  <span>{p.name}</span>
+                  <span className={styles.tabDimension}>{p.dimension}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </nav>
 
@@ -262,7 +264,7 @@ export default function Home() {
               <GridDisplay
                 grid={currentPuzzle.test_input}
                 title="Test input"
-                cellSize={28}
+                cellSize={22}
               />
 
               <span className={styles.arrowGlyph} aria-hidden="true">→</span>
@@ -271,7 +273,7 @@ export default function Home() {
                 predictedGrid={contextModel.predicted_output}
                 groundTruthGrid={currentPuzzle.ground_truth}
                 title="Predicted output"
-                cellSize={28}
+                cellSize={22}
                 routeType="context"
               />
 
@@ -280,7 +282,7 @@ export default function Home() {
               <GridDisplay
                 grid={currentPuzzle.ground_truth}
                 title="Ground truth"
-                cellSize={28}
+                cellSize={22}
               />
             </div>
           </div>
@@ -349,7 +351,7 @@ export default function Home() {
               <GridDisplay
                 grid={currentPuzzle.test_input}
                 title="Test input"
-                cellSize={28}
+                cellSize={22}
               />
 
               <span className={styles.arrowGlyph} aria-hidden="true">→</span>
@@ -358,7 +360,7 @@ export default function Home() {
                 predictedGrid={optimizationModel.predicted_output}
                 groundTruthGrid={currentPuzzle.ground_truth}
                 title="Predicted output"
-                cellSize={28}
+                cellSize={22}
                 routeType="optimization"
                 incorrectCells={optimizationModel.incorrect_cells}
               />
@@ -368,7 +370,7 @@ export default function Home() {
               <GridDisplay
                 grid={currentPuzzle.ground_truth}
                 title="Ground truth"
-                cellSize={28}
+                cellSize={22}
               />
             </div>
           </div>

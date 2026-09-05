@@ -1,10 +1,10 @@
 .container {
   min-height: 100vh;
-  padding: 24px 32px;
+  padding: 14px 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  max-width: 1440px;
+  gap: 12px;
+  max-width: 1560px;
   margin: 0 auto;
   transition: box-shadow 200ms ease, border-color 200ms ease;
 }
@@ -19,71 +19,106 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-hairline);
-  padding-bottom: 16px;
+  padding-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .brandArea {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.01em;
 }
 
 .subtitle {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-secondary);
 }
 
 .headerTelemetry {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .telemetryItem {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
+  gap: 6px;
+  font-size: 11px;
   color: var(--text-secondary);
 }
 
 .telemetryVal {
   color: var(--text-primary);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
   background-color: var(--bg-surface);
   border: 1px solid var(--border-hairline);
   padding: 2px 6px;
   border-radius: 3px;
 }
 
-/* Horizontal pill-tab row for puzzle selection (Neutral gray, neutral underline) */
+/* Horizontally Scrollable Tab Bar for Task Selection */
 .puzzlePicker {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   border-bottom: 1px solid var(--border-hairline);
-  padding-bottom: 8px;
+  padding-bottom: 4px;
+  width: 100%;
+  overflow: hidden;
 }
 
 .pickerLabel {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-secondary);
-  margin-right: 8px;
   font-family: var(--font-heading);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tabScrollContainer {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  width: 100%;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hairline) transparent;
+}
+
+.tabScrollContainer::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tabScrollContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tabScrollContainer::-webkit-scrollbar-thumb {
+  background: var(--border-hairline);
+  border-radius: 2px;
+}
+
+.tabScrollContainer::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
 }
 
 .tabList {
   display: flex;
   align-items: center;
   gap: 4px;
+  flex-shrink: 0;
 }
 
 .puzzleTab {
@@ -91,12 +126,14 @@
   border: none;
   color: var(--text-secondary);
   font-family: var(--font-heading);
-  font-size: 13px;
-  padding: 6px 14px;
+  font-size: 12px;
+  padding: 5px 12px;
   cursor: pointer;
   position: relative;
   border-radius: 4px 4px 0 0;
   transition: color 150ms ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .puzzleTab:hover {
@@ -112,13 +149,15 @@
 .puzzleTabActive {
   color: var(--text-primary);
   font-weight: 500;
+  background-color: var(--bg-surface);
+  border-radius: 3px;
 }
 
-/* Neutral 2px underline strictly on active tab (No teal, no coral) */
+/* Neutral 2px underline strictly on active tab */
 .puzzleTabActive::after {
   content: "";
   position: absolute;
-  bottom: -9px;
+  bottom: -5px;
   left: 0;
   width: 100%;
   height: 2px;
@@ -127,16 +166,17 @@
 
 .tabDimension {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-secondary);
-  margin-left: 6px;
+  margin-left: 5px;
 }
 
-/* Two-Instrument Comparison Layout */
+/* Two-Instrument Side-by-Side Comparison Layout */
 .comparisonGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: stretch;
 }
 
 /* Instrument Card Panel Base */
@@ -144,10 +184,10 @@
   background-color: var(--bg-surface);
   border: 1px solid var(--border-hairline);
   border-radius: 4px;
-  padding: 24px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 }
 
 /* Context Route Theming (Teal #5EEAD4) */
@@ -166,101 +206,104 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-hairline);
-  padding-bottom: 14px;
+  padding-bottom: 10px;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
 }
 
 .panelTitleArea {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .panelTitle {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-primary);
 }
 
 .badgeContext {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--accent-a);
   background: rgba(94, 234, 212, 0.08);
   border: 1px solid var(--accent-a);
-  padding: 2px 8px;
+  padding: 1px 6px;
   border-radius: 3px;
 }
 
 .badgeOpt {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--accent-b);
   background: rgba(242, 150, 125, 0.08);
   border: 1px solid var(--accent-b);
-  padding: 2px 8px;
+  padding: 1px 6px;
   border-radius: 3px;
 }
 
 .headerRightArea {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 
 .adversarialTag {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--accent-b);
   background: rgba(242, 150, 125, 0.12);
   border: 1px solid var(--accent-b);
-  padding: 2px 6px;
+  padding: 1px 5px;
   border-radius: 2px;
 }
 
 /* Body Content: Visualization & Grid Sequence */
 .panelBody {
-  display: grid;
-  grid-template-columns: minmax(320px, 460px) 1fr;
-  gap: 28px;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
 }
 
 /* Panel Body: 3 Grids in sequence (Input -> Predicted -> Ground Truth) */
 .flowSequence {
   display: flex;
   align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  padding: 4px 0;
+  justify-content: space-between;
+  gap: 8px;
+  background-color: var(--bg-base);
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  padding: 10px;
 }
 
 .arrowGlyph {
   font-family: var(--font-mono);
-  font-size: 18px;
+  font-size: 14px;
   color: var(--text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 2px;
+  padding: 0 1px;
 }
 
 /* Panel Telemetry Footer (Monospace IBM Plex Mono) */
 .panelFooter {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
   border-top: 1px solid var(--border-hairline);
-  padding-top: 14px;
+  padding-top: 10px;
   flex-wrap: wrap;
 }
 
 .metricGroup {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
+  gap: 6px;
+  font-size: 11px;
 }
 
 .metricLabel {
@@ -269,52 +312,46 @@
 
 .metricValContext {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--accent-a);
 }
 
 .metricValOpt {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--accent-b);
 }
 
 .metricValNeutral {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-primary);
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 1024px) {
-  .panelBody {
+/* Mobile & Tablet Responsiveness */
+@media (max-width: 1080px) {
+  .comparisonGrid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 16px;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .container {
-    padding: 16px;
-    gap: 16px;
+    padding: 12px;
+    gap: 12px;
   }
 
   .instrumentHeader {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
-  }
-
-  .puzzlePicker {
-    overflow-x: auto;
-    width: 100%;
-    padding-bottom: 12px;
+    gap: 8px;
   }
 
   .flowSequence {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: center;
+    gap: 8px;
   }
 
   .arrowGlyph {

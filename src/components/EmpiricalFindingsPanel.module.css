@@ -4,8 +4,8 @@
   background-color: var(--bg-surface);
   border: 1px solid var(--border-hairline);
   border-radius: 4px;
-  padding: 24px;
-  gap: 20px;
+  padding: 14px 18px;
+  gap: 12px;
 }
 
 .header {
@@ -13,19 +13,19 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-hairline);
-  padding-bottom: 14px;
+  padding-bottom: 8px;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
 }
 
 .titleArea {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-primary);
 }
@@ -43,7 +43,7 @@
 .gridComparison {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: 14px;
   align-items: stretch;
 }
 
@@ -53,10 +53,10 @@
   border: 1px solid var(--border-hairline);
   border-top: 3px solid var(--accent-a);
   border-radius: 4px;
-  padding: 20px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 }
 
 .cardHeader {
@@ -66,14 +66,14 @@
 }
 
 .cardTitleContext {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--accent-a);
   font-family: var(--font-heading);
 }
 
 .cardTitleOpt {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--accent-b);
   font-family: var(--font-heading);
@@ -81,19 +81,19 @@
 
 .cardBadgeContext {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 9px;
   color: var(--accent-a);
   border: 1px solid rgba(94, 234, 212, 0.4);
-  padding: 1px 6px;
+  padding: 1px 5px;
   border-radius: 2px;
 }
 
 .cardBadgeOpt {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 9px;
   color: var(--accent-b);
   border: 1px solid rgba(242, 150, 125, 0.4);
-  padding: 1px 6px;
+  padding: 1px 5px;
   border-radius: 2px;
 }
 
@@ -101,28 +101,28 @@
 .chartWrapper {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   background: var(--bg-surface);
   border: 1px solid var(--border-hairline);
   border-radius: 3px;
-  padding: 14px;
+  padding: 10px 12px;
 }
 
 .barRow {
   display: grid;
-  grid-template-columns: 75px 1fr 50px;
+  grid-template-columns: 65px 1fr 45px;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .barLabel {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-secondary);
   font-family: var(--font-heading);
 }
 
 .barTrack {
-  height: 10px;
+  height: 8px;
   background-color: var(--bg-base);
   border: 1px solid var(--border-hairline);
   border-radius: 2px;
@@ -139,16 +139,16 @@
 
 .barValue {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-primary);
   text-align: right;
   font-weight: 500;
 }
 
 .cardDescription {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.4;
   font-family: var(--font-body);
 }
 
@@ -158,10 +158,10 @@
   border: 1px solid var(--border-hairline);
   border-top: 3px solid var(--accent-b);
   border-radius: 4px;
-  padding: 20px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 }
 
 .heroStatBox {
@@ -172,14 +172,14 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-hairline);
   border-radius: 3px;
-  padding: 20px 16px;
+  padding: 12px;
   text-align: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .heroStatNumber {
   font-family: var(--font-mono);
-  font-size: 38px;
+  font-size: 28px;
   font-weight: 600;
   color: var(--accent-b);
   line-height: 1;
@@ -188,7 +188,7 @@
 
 .heroStatLabel {
   font-family: var(--font-heading);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-primary);
   text-transform: none;
 }
