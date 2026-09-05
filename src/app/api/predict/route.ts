@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { MOCK_PUZZLES } from "@/lib/mockApi";
+import { generateGraphProgression } from "@/lib/stateMapper";
+
 
 const PYTHON_BACKEND_URL =
   process.env.PYTHON_BACKEND_URL || "http://127.0.0.1:8000";
@@ -111,24 +113,10 @@ export async function GET(request: NextRequest) {
           const prediction = result.prediction || groundTruth;
           const incorrectCells = computeIncorrectCells(prediction, groundTruth);
 
-          // Build dynamic edge weights from real per_demo_states
+          // Generate real per-step graph snapshots from 128-d per_demo_states
           const perDemoStates = result.per_demo_states || [];
           const finalStateNorm = result.final_state_norm || 6.8;
-
-          const edges = BASE_EDGE_CONNECTIONS.map((e, idx) => {
-            const weights = [0.1];
-            for (let d = 0; d < 5; d++) {
-              const stateNorm = perDemoStates[d]?.state_norm || (finalStateNorm * (d + 1)) / 5;
-              const normalized = Math.min(1.0, Math.max(0.05, (stateNorm / 7.5) * (0.4 + (idx % 5) * 0.15)));
-              weights.push(parseFloat(normalized.toFixed(3)));
-            }
-            return {
-              id: e.id,
-              source: e.source,
-              target: e.target,
-              weights,
-            };
-          });
+          const { nodes, edges } = generateGraphProgression(perDemoStates);
 
           return NextResponse.json({
             source: "live",
@@ -138,13 +126,14 @@ export async function GET(request: NextRequest) {
             latency_ms: parseFloat(Number(result.latency_ms || 1.25).toFixed(2)),
             confidence: parseFloat(Number(result.confidence || 0.999).toFixed(4)),
             state_snapshot: {
-              nodes: STANDARD_GRAPH_NODES,
+              nodes,
               edges,
               memory_status: `holding (${demoCount} pairs in GRU state, norm: ${finalStateNorm.toFixed(2)})`,
               per_demo_states: perDemoStates,
             },
             incorrect_cells: incorrectCells,
           });
+
         }
       }
 

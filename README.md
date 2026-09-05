@@ -52,6 +52,21 @@ A machine adapts to new tasks through two distinct mechanisms:
 
 ---
 
+## Live vs. Illustrative Elements
+
+To maintain complete research honesty and transparency:
+
+- **100% Live Neural Inference**:
+  - All grid predictions, output logits, confidences, latencies, gradient descent loss histories (`loss_curve`), and cell-level error diffs are executed live against real PyTorch checkpoints in `hubdk17/Forge_puzzle` (`context_model/checkpoint.pt` and `optimization_model/checkpoint.pt`).
+  - Dynamic cell failure outlines in `<DiffGridDisplay>` are computed cell-by-cell in real time by comparing `predicted_output[r][c] !== groundTruth[r][c]`.
+
+- **Dimensionality-Reduction Visualization**:
+  - The recurrent context model outputs a high-dimensional 128-d latent state vector `h` at each demonstration step.
+  - `<StateVectorView>` utilizes a deterministic dimensionality-reduction projection (`src/lib/stateMapper.ts`): the 128-d vector is partitioned into 10 contiguous feature segments, taking the mean absolute value of each segment to drive the 10 topological node activations ($n_0 \dots n_9$) and connecting edge weights. This makes synaptic associative memory updates visually intuitive without attempting to render raw 128-coordinate vectors directly.
+
+---
+
+
 ## API & Architecture
 
 The application is built on **Next.js 16 (Turbopack, App Router, TypeScript)** with API endpoints providing normalized contracts:
