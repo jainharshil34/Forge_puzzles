@@ -43,7 +43,7 @@ export const LossCurveView: React.FC<LossCurveViewProps> = ({
   // Chart dimensions
   const width = 270;
   const height = 180;
-  const paddingLeft = 32;
+  const paddingLeft = 38;
   const paddingRight = 16;
   const paddingTop = 16;
   const paddingBottom = 26;
@@ -51,15 +51,30 @@ export const LossCurveView: React.FC<LossCurveViewProps> = ({
   const chartW = width - paddingLeft - paddingRight;
   const chartH = height - paddingTop - paddingBottom;
 
-  const maxLoss = 1.0;
-  const minLoss = 0.0;
+  // Dynamic Y-axis: compute range from actual data with 10% padding
+  const allLosses = normalizedData.map((d) => d.loss);
+  const rawMax = Math.max(...allLosses, 0.01);
+  const rawMin = Math.min(...allLosses, 0);
+  const lossRange = rawMax - rawMin;
+  // Add 15% vertical padding so curve fills the chart area
+  const maxLoss = rawMax + lossRange * 0.15 + 0.001;
+  const minLoss = Math.max(0, rawMin - lossRange * 0.15);
 
-  const getX = (step: number) => paddingLeft + (step / (maxStep || 1)) * chartW;
+  // For very short curves (<=10 steps), space x evenly by index instead of step value
+  const isShortCurve = maxStep <= 10;
+  const getX = (step: number, idx: number) =>
+    isShortCurve
+      ? paddingLeft + (idx / Math.max(1, normalizedData.length - 1)) * chartW
+      : paddingLeft + (step / (maxStep || 1)) * chartW;
   const getY = (loss: number) =>
-    paddingTop + chartH - ((Math.min(maxLoss, Math.max(minLoss, loss)) - minLoss) / (maxLoss - minLoss)) * chartH;
+    paddingTop +
+    chartH -
+    ((Math.min(maxLoss, Math.max(minLoss, loss)) - minLoss) /
+      Math.max(0.0001, maxLoss - minLoss)) *
+      chartH;
 
   const pathD = visibleData
-    .map((d, i) => `${i === 0 ? "M" : "L"} ${getX(d.step).toFixed(1)} ${getY(d.loss).toFixed(1)}`)
+    .map((d, i) => `${i === 0 ? "M" : "L"} ${getX(d.step, i).toFixed(1)} ${getY(d.loss).toFixed(1)}`)
     .join(" ");
 
   return (
@@ -96,28 +111,12 @@ export const LossCurveView: React.FC<LossCurveViewProps> = ({
           />
 
           <text
-            x={paddingLeft - 6}
-            y={paddingTop + 4}
-            textAnchor="end"
-            className={styles.axisLabel}
-          >
-            1.0
-          </text>
-          <text
-            x={paddingLeft - 6}
-            y={paddingTop + chartH}
-            textAnchor="end"
-            className={styles.axisLabel}
-          >
-            0.0
-          </text>
-          <text
             x={paddingLeft}
             y={paddingTop + chartH + 16}
             textAnchor="start"
             className={styles.axisLabel}
           >
-            0
+            step 1
           </text>
           <text
             x={width - paddingRight}
@@ -125,8 +124,38 @@ export const LossCurveView: React.FC<LossCurveViewProps> = ({
             textAnchor="end"
             className={styles.axisLabel}
           >
-            {maxStep}
+            step {maxStep}
           </text>
+
+          {/* Y-axis max/min labels */}
+          <text
+            x={paddingLeft - 6}
+            y={paddingTop + 4}
+            textAnchor="end"
+            className={styles.axisLabel}
+          >
+            {maxLoss.toFixed(3)}
+          </text>
+          <text
+            x={paddingLeft - 6}
+            y={paddingTop + chartH}
+            textAnchor="end"
+            className={styles.axisLabel}
+          >
+            {minLoss.toFixed(3)}
+          </text>
+
+          {/* Individual step dots for short real loss curves */}
+          {isShortCurve && visibleData.map((d, i) => (
+            <circle
+              key={`dot-${i}`}
+              cx={getX(d.step, i)}
+              cy={getY(d.loss)}
+              r={2.5}
+              fill="var(--accent-b)"
+              opacity={0.6}
+            />
+          ))}
 
           {visibleData.length > 0 && (
             <path
@@ -137,7 +166,7 @@ export const LossCurveView: React.FC<LossCurveViewProps> = ({
 
           {visibleData.length > 0 && (
             <circle
-              cx={getX(latestPoint.step)}
+              cx={getX(latestPoint.step, visibleData.length - 1)}
               cy={getY(latestPoint.loss)}
               r={4}
               className={styles.lastPoint}

@@ -81,7 +81,7 @@ export function projectStateVectorToNodeActivations(
 
   const numBuckets = 10;
   const bucketSize = Math.floor(stateVector.length / numBuckets);
-  const activations: number[] = [];
+  const rawActivations: number[] = [];
 
   for (let i = 0; i < numBuckets; i++) {
     const start = i * bucketSize;
@@ -89,19 +89,22 @@ export function projectStateVectorToNodeActivations(
     const segment = stateVector.slice(start, end);
 
     if (segment.length === 0) {
-      activations.push(0.1);
+      rawActivations.push(0);
       continue;
     }
 
     const sumAbs = segment.reduce((acc, val) => acc + Math.abs(val), 0);
-    const meanAbs = sumAbs / segment.length;
-
-    // Scale to a clean normalized activation range [0.08, 1.0]
-    const scaled = Math.min(1.0, Math.max(0.08, meanAbs * 1.8));
-    activations.push(parseFloat(scaled.toFixed(3)));
+    rawActivations.push(sumAbs / segment.length);
   }
 
-  return activations;
+  // Normalize to [0.08, 1.0] relative to the max in this snapshot
+  // so each demo step shows real relative activation differences
+  const globalMax = Math.max(...rawActivations, 0.001);
+  return rawActivations.map((v) => {
+    const normalized = v / globalMax; // 0..1
+    const scaled = 0.08 + normalized * 0.92; // 0.08..1.0
+    return parseFloat(scaled.toFixed(3));
+  });
 }
 
 /**
@@ -125,8 +128,10 @@ export function generateGraphProgression(perDemoStates: PerDemoState[]): {
     n9: 9,
   };
 
-  // Step 0 baseline activations (minimal background potential)
-  const stepActivations: number[][] = [new Array(10).fill(0.12)];
+  // Step 0 baseline: small seeded values to give the graph life at rest
+  // (not uniform so the graph isn't completely flat before any demo)
+  const BASELINE_NOISE = [0.12, 0.09, 0.11, 0.08, 0.13, 0.10, 0.12, 0.09, 0.11, 0.10];
+  const stepActivations: number[][] = [BASELINE_NOISE];
 
   // Compute activations for each demo step from the real state_vector
   (perDemoStates || []).forEach((state) => {

@@ -115,9 +115,14 @@ export async function GET(request: NextRequest) {
 
           // Generate real per-step graph snapshots from 128-d per_demo_states
           const perDemoStates = result.per_demo_states || [];
-          const finalStateNorm = result.final_state_norm || 6.8;
+          const finalStateNorm = typeof result.final_state_norm === "number"
+            ? result.final_state_norm
+            : perDemoStates.length > 0
+            ? (perDemoStates[perDemoStates.length - 1].state_norm ?? 6.8)
+            : 6.8;
           const { nodes, edges } = generateGraphProgression(perDemoStates);
 
+          const exactMatch = incorrectCells.length === 0;
           return NextResponse.json({
             source: "live",
             puzzle_id: rawPuzzle.id,
@@ -125,10 +130,11 @@ export async function GET(request: NextRequest) {
             predicted_output: prediction,
             latency_ms: parseFloat(Number(result.latency_ms || 1.25).toFixed(2)),
             confidence: parseFloat(Number(result.confidence || 0.999).toFixed(4)),
+            exact_match: exactMatch,
             state_snapshot: {
               nodes,
               edges,
-              memory_status: `holding (${demoCount} pairs in GRU state, norm: ${finalStateNorm.toFixed(2)})`,
+              memory_status: `${exactMatch ? "✓ correct" : "partial"} · ${demoCount} pairs · norm ${finalStateNorm.toFixed(2)}`,
               per_demo_states: perDemoStates,
             },
             incorrect_cells: incorrectCells,
@@ -139,13 +145,15 @@ export async function GET(request: NextRequest) {
 
       // 3. Real Optimization Model Inference
       if (modelType === "optimization") {
+        // Scale gradient steps with demo count — more context → more optimization budget
+        const gradientSteps = demoCount <= 1 ? 3 : demoCount <= 3 ? 5 : 10;
         const optRes = await fetch(`${PYTHON_BACKEND_URL}/api/predict/optimization`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             puzzle: rawPuzzle,
             num_demos: demoCount,
-            K: 5,
+            K: gradientSteps,
             inner_lr: 0.05,
           }),
           cache: "no-store",
@@ -156,6 +164,7 @@ export async function GET(request: NextRequest) {
           const result = body.result || {};
           const prediction = result.prediction || [];
           const incorrectCells = computeIncorrectCells(prediction, groundTruth);
+          const exactMatch = incorrectCells.length === 0;
 
           const rawLossCurve: number[] = result.loss_curve || [];
           const lossHistory = rawLossCurve.map((l: number, i: number) => ({
@@ -175,8 +184,9 @@ export async function GET(request: NextRequest) {
             predicted_output: prediction,
             latency_ms: parseFloat(Number(result.latency_ms || 4300.0).toFixed(2)),
             confidence: parseFloat(Number(result.confidence || 0.364).toFixed(4)),
-            current_step: result.gradient_steps || 5,
-            max_steps: result.gradient_steps || 5,
+            exact_match: exactMatch,
+            current_step: result.gradient_steps || gradientSteps,
+            max_steps: result.gradient_steps || gradientSteps,
             loss: latestLoss,
             learning_rate: 0.05,
             loss_curve: lossHistory,

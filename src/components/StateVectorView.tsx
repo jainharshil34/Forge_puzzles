@@ -147,31 +147,64 @@ export const StateVectorView: React.FC<StateVectorViewProps> = ({
               const isActive = ingestionStage > 0;
               const nodeDelay = prefersReducedMotion ? 0 : nIdx * 0.015;
 
+              // Compute node activation from connected edge weights at current stage
+              const connectedEdges = (edges || []).filter(
+                (e) => e.source === node.id || e.target === node.id
+              );
+              const activation =
+                connectedEdges.length > 0
+                  ? connectedEdges.reduce((sum, e) => {
+                      const w = Array.isArray(e.weights)
+                        ? (e.weights[Math.min(ingestionStage, e.weights.length - 1)] ?? 0.12)
+                        : typeof e.weights === "number"
+                        ? e.weights
+                        : 0.12;
+                      return sum + w;
+                    }, 0) / connectedEdges.length
+                  : 0.12;
+
+              // Node glow color intensity proportional to activation
+              const glowOpacity = isActive ? Math.min(1, 0.15 + activation * 0.85) : 0;
+              const strokeColor = isActive
+                ? `rgba(94, 234, 212, ${Math.min(1, 0.3 + activation * 0.7)})`
+                : "#2A2E38";
+              const innerDotR = isActive
+                ? (node.layer === 2 ? 3 : 2) + activation * 2.5
+                : node.layer === 2 ? 3 : 2;
+
               return (
                 <g key={node.id} transform={`translate(${node.x}, ${node.y})`}>
+                  {/* Soft glow for active nodes */}
+                  {isActive && (
+                    <circle
+                      r={node.layer === 2 ? 14 : 11}
+                      fill={`rgba(94, 234, 212, ${glowOpacity * 0.12})`}
+                    />
+                  )}
                   <motion.circle
                     r={node.layer === 2 ? 8 : 6}
                     fill="#171A21"
-                    stroke="#2A2E38"
-                    strokeWidth={1}
+                    stroke={strokeColor}
+                    strokeWidth={isActive ? 1.5 : 1}
                     animate={
                       prefersReducedMotion
                         ? undefined
                         : {
-                            scale: isActive ? [1, 1.28, 1] : 1,
-                            stroke: isActive ? "#5EEAD4" : "#2A2E38",
+                            scale: isActive ? [1, 1.2 + activation * 0.15, 1] : 1,
+                            stroke: strokeColor,
                           }
                     }
                     transition={{
                       type: "spring",
-                      stiffness: 300,
-                      damping: 15,
+                      stiffness: 280,
+                      damping: 18,
                       delay: nodeDelay,
                     }}
                   />
                   <circle
-                    r={node.layer === 2 ? 3 : 2}
+                    r={Math.min(node.layer === 2 ? 6 : 4.5, innerDotR)}
                     fill={isActive ? "#5EEAD4" : "#8B909C"}
+                    opacity={isActive ? Math.min(1, 0.5 + activation * 0.5) : 0.5}
                   />
                   <text y={node.layer === 0 ? -10 : 12} className={styles.nodeLabel}>
                     {node.label}
