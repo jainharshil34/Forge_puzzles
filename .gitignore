@@ -15,6 +15,21 @@
 
 # Testing & coverage
 /coverage
+.pytest_cache/
+htmlcov/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # Environment & secrets
 .env
@@ -41,7 +56,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# Vercel & Antigravity
+# Vercel & Agent caches
 .vercel
 .gemini/
 .system_generated/
@@ -49,6 +64,3 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
-
-# Backend / submodule
-Forge_puzzle/

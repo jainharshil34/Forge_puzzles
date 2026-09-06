@@ -22,7 +22,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DataForge — Learn It or Remember It",
+  title: "DataForge: Learn It or Remember It",
   description: "Laboratory instrument comparing in-context memory adaptation and gradient optimization.",
 };
 

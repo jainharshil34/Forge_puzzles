@@ -9,6 +9,9 @@ import { LossCurveView, LossDataPoint } from "@/components/LossCurveView";
 import { ControlBar } from "@/components/ControlBar";
 import { PrecomputedBadge } from "@/components/PrecomputedBadge";
 import { EmpiricalFindingsPanel } from "@/components/EmpiricalFindingsPanel";
+import { ClaimStatement } from "@/components/ClaimStatement";
+import { BDHModule } from "@/components/BDHModule";
+import { ModelDepthPanel } from "@/components/ModelDepthPanel";
 import styles from "./page.module.css";
 
 interface DemoPair {
@@ -52,7 +55,7 @@ interface Puzzle {
 
 export default function Home() {
   const [puzzles, setPuzzles] = useState<Puzzle[]>([]);
-  const [selectedPuzzleId, setSelectedPuzzleId] = useState<string>("arc-sym-01");
+  const [selectedPuzzleId, setSelectedPuzzleId] = useState<string>("");
 
   // Control suite state
   const [demoCount, setDemoCount] = useState<number>(2);
@@ -69,16 +72,21 @@ export default function Home() {
   const [ingestionStage, setIngestionStage] = useState<number>(2);
   const [optStepIndex, setOptStepIndex] = useState<number>(12);
 
-  // Load puzzles on mount
+  // Load puzzles on mount and when novelty split changes
   useEffect(() => {
-    getPuzzles().then((list) => {
+    const split = novelty === "novel" ? "novelty" : "test";
+    getPuzzles(split, 20).then((list) => {
       const typedList = list as Puzzle[];
       setPuzzles(typedList);
-      if (typedList.length > 0 && !selectedPuzzleId) {
-        setSelectedPuzzleId(typedList[0].id);
+      if (typedList.length > 0) {
+        // If current selection is empty or not in this split, switch to the first puzzle of the split
+        setSelectedPuzzleId((prev) => {
+          const exists = typedList.some((p) => p.id === prev);
+          return exists ? prev : typedList[0].id;
+        });
       }
     });
-  }, [selectedPuzzleId]);
+  }, [novelty]);
 
   // Load puzzle and predictions when parameters change
   const loadData = useCallback(
@@ -174,7 +182,7 @@ export default function Home() {
         <div className={styles.brandArea}>
           <h1 className={styles.title}>Learn it or remember it</h1>
           <p className={styles.subtitle}>
-            Two-model adaptation benchmark — in-context memory vs gradient optimization
+            Two-model adaptation benchmark: in-context memory vs gradient optimization
           </p>
         </div>
 
@@ -191,6 +199,9 @@ export default function Home() {
           </div>
         </div>
       </header>
+
+      {/* Core Empirical Claim Statement */}
+      <ClaimStatement />
 
       {/* Horizontal Pill-Tab Row (Neutral Tabs, 2px Neutral Underline) */}
       <nav className={styles.puzzlePicker} aria-label="Puzzle selection tabs">
@@ -407,6 +418,12 @@ export default function Home() {
 
       {/* Empirical Findings Panel (Direct real findings for judges) */}
       <EmpiricalFindingsPanel />
+
+      {/* BDH-CQ Theoretical Lineage & Architecture Context Module */}
+      <BDHModule />
+
+      {/* Model Depth: Advanced Empirical Findings */}
+      <ModelDepthPanel />
     </main>
   );
 }

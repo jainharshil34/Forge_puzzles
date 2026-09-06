@@ -315,11 +315,18 @@ export const MOCK_PUZZLES = [
 
 /**
  * Fetch all available puzzles.
+ * @param {'test' | 'novelty' | 'train' | 'validation'} [split='test']
+ * @param {number} [limit=20]
  * @returns {Promise<Array>}
  */
-export async function getPuzzles() {
+export async function getPuzzles(split = "test", limit = 20) {
   try {
-    const res = await fetch(`${API_BASE}/api/puzzles`, { cache: "no-store" });
+    const res = await fetch(
+      `${API_BASE}/api/puzzles?split=${encodeURIComponent(
+        split
+      )}&limit=${encodeURIComponent(limit)}`,
+      { cache: "no-store" }
+    );
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } catch {

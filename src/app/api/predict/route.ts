@@ -145,7 +145,7 @@ export async function GET(request: NextRequest) {
 
       // 3. Real Optimization Model Inference
       if (modelType === "optimization") {
-        // Scale gradient steps with demo count — more context → more optimization budget
+        // Scale gradient steps with demo count: more context -> more optimization budget
         const gradientSteps = demoCount <= 1 ? 3 : demoCount <= 3 ? 5 : 10;
         const optRes = await fetch(`${PYTHON_BACKEND_URL}/api/predict/optimization`, {
           method: "POST",

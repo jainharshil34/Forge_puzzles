@@ -1,0 +1,70 @@
+.claimContainer {
+  margin: 0 0 16px 0;
+  padding: 16px 20px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-left: 3px solid var(--accent-a);
+  border-radius: 4px;
+}
+
+.claimHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.claimLabel {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+}
+
+.claimBadge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background-color: rgba(94, 234, 212, 0.1);
+  color: var(--accent-a);
+  border: 1px solid rgba(94, 234, 212, 0.25);
+}
+
+.claimProse {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text-primary);
+}
+
+.highlightCoral {
+  color: var(--accent-b);
+  background-color: rgba(242, 150, 125, 0.12);
+  border: 1px solid rgba(242, 150, 125, 0.28);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.highlightTeal {
+  color: var(--accent-a);
+  background-color: rgba(94, 234, 212, 0.12);
+  border: 1px solid rgba(94, 234, 212, 0.28);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.monoNumber {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.06);
+  padding: 1px 4px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}

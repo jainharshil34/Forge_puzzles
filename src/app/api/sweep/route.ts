@@ -1,9 +1,26 @@
 import { NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
 
 const PYTHON_BACKEND_URL =
   process.env.PYTHON_BACKEND_URL || "http://127.0.0.1:8000";
 
+function readResultFile(filename: string) {
+  try {
+    const rootDir = process.cwd();
+    const filePath = path.join(rootDir, "results", filename);
+    if (fs.existsSync(filePath)) {
+      const raw = fs.readFileSync(filePath, "utf-8");
+      return JSON.parse(raw);
+    }
+  } catch (err) {
+    console.warn(`Could not read ${filename} from disk:`, err);
+  }
+  return null;
+}
+
 export async function GET() {
+  // 1. Attempt to fetch from live Python backend
   try {
     const res = await fetch(`${PYTHON_BACKEND_URL}/api/results`, {
       cache: "no-store",
@@ -17,16 +34,29 @@ export async function GET() {
         forgetting: data.forgetting || null,
         state_capacity: data.state_capacity || [],
         generalization: data.generalization || null,
+        baselines: data.baselines || null,
+        sweep_attn_variant: data.sweep_attn_variant || readResultFile("sweep_attn_variant.json"),
+        optimization_ceiling: data.optimization_ceiling || readResultFile("optimization_ceiling.json"),
+        cost_efficiency: data.cost_efficiency || readResultFile("cost_efficiency.json"),
+        sweep_multiseed: data.sweep_multiseed || readResultFile("sweep_multiseed.json"),
       });
     }
   } catch (err) {
-    console.warn("Could not reach Python backend for results, using fallback:", err);
+    console.warn("Could not reach Python backend for results, falling back to disk/precomputed:", err);
   }
 
-  // Fallback empirical dataset mirroring results/*.json
+  // 2. Direct disk read fallback
+  const diskSweepAttn = readResultFile("sweep_attn_variant.json");
+  const diskCeiling = readResultFile("optimization_ceiling.json");
+  const diskCost = readResultFile("cost_efficiency.json");
+  const diskSweep = readResultFile("sweep.json");
+  const diskForgetting = readResultFile("forgetting.json");
+  const diskStateCap = readResultFile("state_capacity.json");
+  const diskGen = readResultFile("generalization.json");
+
   return NextResponse.json({
-    source: "precomputed_fallback",
-    sweep: [
+    source: "precomputed_results",
+    sweep: diskSweep || [
       { demo_count: 1, exact_match: 0.02, cell_accuracy: 0.7752, model: "context", rule_type: "translate", latency_ms: 0.53 },
       { demo_count: 2, exact_match: 0.54, cell_accuracy: 0.9640, model: "context", rule_type: "translate", latency_ms: 0.92 },
       { demo_count: 3, exact_match: 0.92, cell_accuracy: 0.9968, model: "context", rule_type: "translate", latency_ms: 1.41 },
@@ -38,18 +68,22 @@ export async function GET() {
       { gradient_steps: 5, exact_match: 0.0, cell_accuracy: 0.4912, model: "optimization", rule_type: "translate", latency_ms: 82.15 },
       { gradient_steps: 10, exact_match: 0.0, cell_accuracy: 0.4944, model: "optimization", rule_type: "translate", latency_ms: 145.20 },
     ],
-    forgetting: {
+    forgetting: diskForgetting || {
       summary: {
         optimization_forgetting: 0.0,
         context_forgetting: 0.0,
       },
     },
-    state_capacity: [
+    state_capacity: diskStateCap || [
       { state_size: 32, test_exact_match: 0.27, test_cell_accuracy: 0.9298 },
       { state_size: 64, test_exact_match: 0.35, test_cell_accuracy: 0.9512 },
       { state_size: 128, test_exact_match: 0.315, test_cell_accuracy: 0.9440 },
       { state_size: 256, test_exact_match: 0.32, test_cell_accuracy: 0.9428 },
       { state_size: 512, test_exact_match: 0.17, test_cell_accuracy: 0.9256 },
     ],
+    generalization: diskGen,
+    sweep_attn_variant: diskSweepAttn,
+    optimization_ceiling: diskCeiling,
+    cost_efficiency: diskCost,
   });
 }

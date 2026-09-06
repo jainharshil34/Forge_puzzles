@@ -1,0 +1,171 @@
+.depthContainer {
+  margin-top: 24px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.depthHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.depthTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.depthTitle {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.depthBadge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background-color: rgba(94, 234, 212, 0.1);
+  color: var(--accent-a);
+  border: 1px solid rgba(94, 234, 212, 0.3);
+}
+
+.dataSourceIndicator {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.findingsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1050px) {
+  .findingsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.findingCard {
+  background-color: rgba(15, 17, 21, 0.6);
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 150ms ease;
+}
+
+.findingCard:hover {
+  border-color: rgba(94, 234, 212, 0.4);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cardTag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background-color: rgba(232, 230, 223, 0.08);
+  color: var(--text-secondary);
+}
+
+.sourcePill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent-a);
+  background: rgba(94, 234, 212, 0.08);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+.cardProse {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #C5C9D3;
+}
+
+/* Metric Display Blocks */
+.metricDisplay {
+  background-color: #0F1115;
+  border: 1px solid var(--border-hairline);
+  border-radius: 3px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metricRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11.5px;
+}
+
+.metricLabel {
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+}
+
+.metricValTeal {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--accent-a);
+}
+
+.metricValCoral {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--accent-b);
+}
+
+.metricValNeutral {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.cardFooterNote {
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  border-top: 1px solid rgba(42, 46, 56, 0.6);
+  padding-top: 8px;
+}

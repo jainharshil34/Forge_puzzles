@@ -1,0 +1,54 @@
+{
+  "training_rules": [
+    "translate",
+    "mirror"
+  ],
+  "held_out_rule": "recolor",
+  "evaluations": [
+    {
+      "model": "context_attention",
+      "rule_type": "translate",
+      "split": "test",
+      "seen_during_training": true,
+      "exact_match": 0.79,
+      "cell_accuracy": 0.9902,
+      "n_samples": 200
+    },
+    {
+      "model": "context_attention",
+      "rule_type": "translate",
+      "split": "novelty",
+      "seen_during_training": true,
+      "exact_match": 0.0,
+      "cell_accuracy": 0.6016,
+      "n_samples": 200
+    },
+    {
+      "model": "context_attention",
+      "rule_type": "mirror",
+      "split": "test",
+      "seen_during_training": true,
+      "exact_match": 0.54,
+      "cell_accuracy": 0.9758,
+      "n_samples": 200
+    },
+    {
+      "model": "context_attention",
+      "rule_type": "recolor",
+      "split": "test",
+      "seen_during_training": false,
+      "exact_match": 0.0,
+      "cell_accuracy": 0.3076,
+      "n_samples": 200
+    },
+    {
+      "model": "context_attention",
+      "rule_type": "recolor",
+      "split": "novelty",
+      "seen_during_training": false,
+      "exact_match": 0.0,
+      "cell_accuracy": 0.2816,
+      "n_samples": 200
+    }
+  ]
+}
