@@ -336,6 +336,4 @@ Open [http://localhost:3000](http://localhost:3000) to access the interactive la
 
 ---
 
-## 9. License
 
-MIT License. Developed as part of the DataForge Research Initiative.
